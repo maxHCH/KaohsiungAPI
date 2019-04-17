@@ -1,17 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>全台測速照相地點</title>
     <link rel="stylesheet" href="./scss/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
+
 <body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand"><i class="fas fa-camera fa-2x text-primary"></i></a>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="輸入城市名">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">搜尋</button>
+            </form>
+        </nav>
+    </header>
+    <section class="section py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col col-lg-6 form-group">
+                    <label for="inputState" >縣市</label>
+                    <select id="inputState" class="form-control">
+                        <option selected>請選擇縣市名稱</option>
+                        <option>台北市</option>
+                        <option>新北市</option>
+                        <option>基隆市</option>
+                        <option>桃園市</option>
+                        <option>新竹市</option>
+                        <option>新竹縣</option>
+                        <option>苗栗縣</option>
+                        <option>台中市</option>
+                        <option>彰化縣</option>
+                        <option>南投縣</option>
+                        <option>雲林縣</option>
+                        <option>嘉義縣</option>
+                        <option>嘉義市</option>
+                        <option>台南市</option>
+                        <option>高雄市</option>
+                        <option>宜蘭縣</option>
+                        <option>花蓮縣</option>
+                        <option>台東縣</option>
+                        <option>澎湖縣</option>
+                        <option>連江縣</option>
+                        <option>金門縣</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-dark py-4">
+        <p class="text-light text-center">2019 MaxHyun製作</p> 
+    </footer>
 
-
-
-
-<script src="./js/all.js"></script>
+    <script src="./js/all.js"></script>
 </body>
+
 </html>
