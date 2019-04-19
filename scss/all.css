@@ -10576,4 +10576,20 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+.header .navbar .nav-text {
+  font-size: 32px;
+  font-family: Optima-ExtraBlack;
+}
+
+.header .navbar .nav-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  padding-right: 150px;
+}
+
+.section {
+  border-radius: 0px;
+}
 /*# sourceMappingURL=all.css.map */
