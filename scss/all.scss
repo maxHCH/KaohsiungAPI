@@ -20,4 +20,13 @@
 }
 .section {
     border-radius: 0px;
+    .bg-cover {
+        background-position: center center;
+        background-size: cover;
+        height: 150px;
+    }
+    .list-font {
+        font-size: 14px;
+
+    }
 }

@@ -10592,4 +10592,14 @@ a.text-dark:hover, a.text-dark:focus {
 .section {
   border-radius: 0px;
 }
+
+.section .bg-cover {
+  background-position: center center;
+  background-size: cover;
+  height: 150px;
+}
+
+.section .list-font {
+  font-size: 14px;
+}
 /*# sourceMappingURL=all.css.map */
