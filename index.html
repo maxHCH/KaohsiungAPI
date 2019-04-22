@@ -19,10 +19,10 @@
                     HaveFun
                 </a>
                 <form class="form-inline m-auto w-50">
-                    <button class="btn my-2 my-sm-0 border-0 " type="button">
+                    <button class="btn my-2 my-sm-0 border-0 " id="search" type="button">
                         <i class="fas fa-search fa-2x text-white"></i>
                     </button>
-                    <input class="form-control mr-sm-2 nav-input rounded-0" type="search" placeholder="Search">
+                    <input class="form-control mr-sm-2 nav-input rounded-0 text-white" type="search" placeholder="Search">
                 </form>
             </div>
         </nav>
@@ -33,7 +33,7 @@
                 <div class="col col-lg-3 form-group bg-light py-4">
                     <label for="inputState" class="h5 py-2">鄉鎮市</label>
                     <select id="inputState" class="form-control change-city">
-                        <option>請選擇</option>
+                        <option value="請選擇">請選擇</option>
                         <option value="三民區">三民區</option>
                         <option value="前鎮區">前鎮區</option>
                         <option value="苓雅區">苓雅區</option>
@@ -76,19 +76,13 @@
                     <hr>
                     <div class="h5 py-2">選擇條件</div>
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="allCheck">
-                        <label class="form-check-label" for="allCheck">
-                            All
-                        </label>
-                    </div>
-                    <div class="form-check mb-2">
                         <input class="form-check-input" type="checkbox" value="免費參觀" id="ticketFree">
                         <label class="form-check-label" for="ticketFree">
                             免費參觀
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="alltime">
+                        <input class="form-check-input" type="checkbox" value="全天候開放" id="alltime">
                         <label class="form-check-label" for="alltime">
                             全天候開放
                         </label>
