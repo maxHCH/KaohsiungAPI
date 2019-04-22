@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>來去高雄</title>
+    <link rel="stylesheet" href="./scss/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="header sticky-top">
+        <nav class="navbar navbar-dark bg-dark px-0">
+            <div class="container">
+                <a class="navbar-brand text-white nav-text ">
+                    HaveFun
+                </a>
+                <form class="form-inline m-auto w-50">
+                    <button class="btn my-2 my-sm-0 border-0 " id="search" type="button">
+                        <i class="fas fa-search fa-2x text-white"></i>
+                    </button>
+                    <input class="form-control mr-sm-2 nav-input rounded-0 text-white" type="search" placeholder="Search" aria-label="Search">
+                </form>
+            </div>
+        </nav>
+    </header>
+    <section class="section">
+        <div class="container ">
+            <div class="row">
+                <div class="col col-lg-3 form-group bg-light py-4">
+                    <label for="inputState" class="h5 py-2">鄉鎮市</label>
+                    <select id="inputState" class="form-control change-city">
+                        <option value="請選擇">請選擇</option>
+                        <option value="三民區">三民區</option>
+                        <option value="前鎮區">前鎮區</option>
+                        <option value="苓雅區">苓雅區</option>
+                        <option value="仁武區">仁武區</option>
+                        <option value="楠梓區">楠梓區</option>
+                        <option value="左營區">左營區</option>
+                        <option value="鼓山區">鼓山區</option>
+                        <option value="鹽埕區">鹽埕區</option>
+                        <option value="前金區">前金區</option>
+                        <option value="新興區">新興區</option>
+                        <option value="旗津區">旗津區</option>
+                        <option value="小港區">小港區</option>
+                        <option value="鳳山區">鳳山區</option>
+                        <option value="大寮區">大寮區</option>
+                        <option value="鳥松區">鳥松區</option>
+                        <option value="林園區">林園區</option>
+                        <option value="大樹區">大樹區</option>
+                        <option value="大社區">大社區</option>
+                        <option value="岡山區">岡山區</option>
+                        <option value="路竹區">路竹區</option>
+                        <option value="橋頭區">橋頭區</option>
+                        <option value="梓官區">梓官區</option>
+                        <option value="彌陀區">彌陀區</option>
+                        <option value="永安區">永安區</option>
+                        <option value="燕巢區">燕巢區</option>
+                        <option value="田寮區">田寮區</option>
+                        <option value="阿蓮區">阿蓮區</option>
+                        <option value="茄萣區">茄萣區</option>
+                        <option value="湖內區">湖內區</option>
+                        <option value="旗山區">旗山區</option>
+                        <option value="美濃區">美濃區</option>
+                        <option value="內門區">內門區</option>
+                        <option value="杉林區">杉林區</option>
+                        <option value="甲仙區">甲仙區</option>
+                        <option value="六龜區">六龜區</option>
+                        <option value="茂林區">茂林區</option>
+                        <option value="桃源區">桃源區</option>
+                        <option value="那瑪夏區">那瑪夏區</option>
+                    </select>
+                    <hr>
+                    <div class="h5 py-2">選擇條件</div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" value="免費參觀" id="ticketFree">
+                        <label class="form-check-label" for="ticketFree">
+                            免費參觀
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="全天候開放" id="alltime">
+                        <label class="form-check-label" for="alltime">
+                            全天候開放
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="showCtg"></div>
+                    <div class="badge"></div>
+                    <div class="showzip"></div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="bg-dark py-4">
+        <p class="text-light text-center">2019 MaxHyun製作</p>
+    </footer>
+    
+    <script src="./js/all.js"></script>
+</body>
+
+</html>

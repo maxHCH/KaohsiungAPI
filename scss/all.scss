@@ -1,0 +1,32 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../scss/component/variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+
+
+.header {
+    .navbar{
+        .nav-text {
+            font-size: 32px;
+            font-family: Optima-ExtraBlack;
+        }
+        .nav-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #fff;
+            padding-right: 150px;
+        }
+    }
+}
+.section {
+    border-radius: 0px;
+    .bg-cover {
+        background-position: center center;
+        background-size: cover;
+        height: 150px;
+    }
+    .list-font {
+        font-size: 14px;
+
+    }
+}
