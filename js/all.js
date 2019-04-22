@@ -5,6 +5,7 @@ const ticketSel = document.getElementById('ticketFree');
 const allTime = document.getElementById('alltime');
 const searchBtn = document.getElementById('search');
 const searchInput = document.querySelector('.nav-input');
+const showBadge = document.querySelector('.badge');
 const xhr = new XMLHttpRequest();
 
 
@@ -123,11 +124,28 @@ function showContent(){
                 });
             }
         }
-        //  
+        //
         let content = '';
         let titleStr = '';
+        let icon = '';
         for (let i=0;i<selData.length;i++){
             titleStr = `<h4 class="py-3 pl-3 mt-2">為你篩選出 <span class="text-info">${selData.length}</span> 筆資料</h4>`
+            if ((ticketSel.checked == true) && (allTime.checked == false)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${ticketSel.value}
+                </span></h5>`
+            }else if ((ticketSel.checked == false) && (allTime.checked == true)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${allTime.value}
+                </span></h5>`
+            }else if ((ticketSel.checked == true) && (allTime.checked == true)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${ticketSel.value}
+                </span>
+                <span class="badge badge-pill badge-info">
+                ${allTime.value}
+                </span></h5>`
+            }
             content += `
                 <div class="row py-4 pl-3">
                     <div class="col-lg-4">
@@ -145,6 +163,7 @@ function showContent(){
             `
         }
         title.innerHTML = titleStr;
+        showBadge.innerHTML = icon;
         list.innerHTML = content;
     }
 }
