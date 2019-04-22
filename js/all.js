@@ -107,23 +107,39 @@ function showContent(){
                     });
                 }    
             }
-        }
-        //Search 功能
-        if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
-            let filterName = calldata.filter(function(item){
-                return item.Name == searchStr;
-            });
-            for (let i = 0 ; i < filterName.length ; i++) {
-                selData.push({
-                    photo:filterName[i].Picture1,
-                    add:filterName[i].Add,
-                    name:filterName[i].Name,
-                    optime:filterName[i].Opentime,
-                    tel:filterName[i].Tel,
-                    ticket:filterName[i].Ticketinfo
-                });
+            //Search 功能
+            else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
+                let describe = calldata[i].Toldescribe;
+                let seek = describe.indexOf(searchStr);
+                if (seek !== -1) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }
             }
         }
+        //Search 功能
+        // if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
+        //     // let filterName = calldata.filter(function(item){
+        //     //     return item.Name == searchStr;
+        //     // });
+            
+        //     // for (let i = 0 ; i < filterName.length ; i++) {
+        //     //     selData.push({
+        //     //         photo:filterName[i].Picture1,
+        //     //         add:filterName[i].Add,
+        //     //         name:filterName[i].Name,
+        //     //         optime:filterName[i].Opentime,
+        //     //         tel:filterName[i].Tel,
+        //     //         ticket:filterName[i].Ticketinfo
+        //     //     });
+        //     // }
+        // }
         //
         let content = '';
         let titleStr = '';
