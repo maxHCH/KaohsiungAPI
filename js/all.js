@@ -110,7 +110,7 @@ function showContent(){
             //Search 功能
             else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
                 let describe = calldata[i].Toldescribe;
-                let seek = describe.indexOf(searchStr);
+                let seek = describe.indexOf(searchStr); 
                 if (seek !== -1) {
                     selData.push({
                         photo:calldata[i].Picture1,
