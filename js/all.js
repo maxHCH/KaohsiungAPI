@@ -38,18 +38,7 @@ function showContent(){
     let timeStr = allTime.value;
     let searchStr = searchInput.value;
     let selData = [];
-    if((ticketSel.checked == true) &&(allTime.checked == false)){
-        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Zone='+inputState.value,true);
-        xhr.send();
-    }else if ((ticketSel.checked == false) &&(allTime.checked == true)){
-        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Opentime='+allTime.value+'&'+'Zone='+inputState.value,true);
-        xhr.send();
-    }else if ((ticketSel.checked == true)&&(allTime.checked == true)){
-        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Opentime='+allTime.value+'&'+'Zone='+inputState.value,true);
-        xhr.send();
-    }else {
-        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Zone='+inputState.value,true);
-    }
+    xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Zone='+inputState.value,true);
     xhr.send();
     xhr.onload = function section(){
         let zoenData = JSON.parse(xhr.responseText);
@@ -91,8 +80,13 @@ function showContent(){
 function Option(){
     let selData = [];
     if((ticketSel.checked == true) &&(allTime.checked == false)){
-        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&',true);
-        xhr.send();
+        if(city.checked == true) {
+            xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Zone='+inputState.value,true);
+            xhr.send();
+        }else{
+            xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value,true);
+            xhr.send();
+        }
     }else if ((ticketSel.checked == false) &&(allTime.checked == true)){
         xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Opentime='+allTime.value,true);
         xhr.send();
