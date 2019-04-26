@@ -9,35 +9,161 @@ const showBadge = document.querySelector('.badge');
 const inputState = document.getElementById('inputState');
 const xhr = new XMLHttpRequest();
 
-xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel',true);
-xhr.send();
-xhr.onload = function section(){
-let calldata = JSON.parse(xhr.responseText);
-const kaoZone = [];
-for( let i=0 ; i<calldata.length ; i++){
-    kaoZone.push(calldata[i].Zone);
-    }
-    const area =[];
-    kaoZone.forEach(function(value) {
-    if (area.indexOf(value) == -1) {
-        area.push(value);
+function reset() {
+    xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel',true);
+    xhr.send();
+    xhr.onload = function set(){
+    let calldata = JSON.parse(xhr.responseText);
+    const kaoZone = [];
+        for( let i=0 ; i<calldata.length ; i++){
+        kaoZone.push(calldata[i].Zone);
         }
-    });
-    let opZone = '<option value="">請選擇</option>';
-    for (let i=0;i<area.length;i++){
-        opZone += `<option value="${area[i]}">${area[i]}</option>`;
+        const area =[];
+        kaoZone.forEach(function(value) {
+        if (area.indexOf(value) == -1) {
+            area.push(value);
+            }
+        });
+        let opZone = '<option>請選擇</option>';
+        for (let i=0;i<area.length;i++){
+            opZone += `<option value="${area[i]}">${area[i]}</option>`;
+        }
+        inputState.innerHTML=opZone;
     }
-    inputState.innerHTML=opZone;
 }
+reset()
 
 function showContent(){
     let ticketStr = ticketSel.value;
     let timeStr = allTime.value;
     let searchStr = searchInput.value;
+    let selData = [];
+    if((ticketSel.checked == true) &&(allTime.checked == false)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Zone='+inputState.value,true);
+        xhr.send();
+    }else if ((ticketSel.checked == false) &&(allTime.checked == true)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Opentime='+allTime.value+'&'+'Zone='+inputState.value,true);
+        xhr.send();
+    }else if ((ticketSel.checked == true)&&(allTime.checked == true)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Opentime='+allTime.value+'&'+'Zone='+inputState.value,true);
+        xhr.send();
+    }else {
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Zone='+inputState.value,true);
+    }
+    xhr.send();
     xhr.onload = function section(){
-        let selData = [];
-        for( let i=0 ; i<calldata.length ; i++){
-            
+        let zoenData = JSON.parse(xhr.responseText);
+        for (let i=0;i<zoenData.length;i++){
+            selData.push({
+                photo:zoenData[i].Picture1,
+                add:zoenData[i].Add,
+                name:zoenData[i].Name,
+                optime:zoenData[i].Opentime,
+                tel:zoenData[i].Tel,
+                ticket:zoenData[i].Ticketinfo
+            });
+        }
+        let content = '';
+        let titleStr = '';
+        for (let i=0;i<selData.length;i++){
+            titleStr = `<h4 class="py-3 pl-3 mt-2">為你篩選出 <span class="text-info">${selData.length}</span> 筆資料</h4>`
+            content += `
+                <div class="row py-4 pl-3">
+                    <div class="col-lg-4">
+                    <div style="background-image:url(${selData[i].photo})"; class="bg-cover">
+                    </div>
+                    </div>
+                    <div class="col-lg-8 mt-3">
+                        <div class="h5 text-primary">${selData[i].name}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-map-marker-alt mr-2"></i>${selData[i].add}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-phone mr-2"></i>${selData[i].tel}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-clock mr-2"></i>${selData[i].optime}</div>
+                        <div class="list-font text-secondary"><i class="fas fa-ticket-alt mr-2"></i>${selData[i].ticket}</div>
+                </div>
+                </div>
+            `
+        }
+        title.innerHTML = titleStr;
+        list.innerHTML = content;
+    }
+    
+}
+function Option(){
+    let selData = [];
+    if((ticketSel.checked == true) &&(allTime.checked == false)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&',true);
+        xhr.send();
+    }else if ((ticketSel.checked == false) &&(allTime.checked == true)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Opentime='+allTime.value,true);
+        xhr.send();
+    }else if ((ticketSel.checked == true)&&(allTime.checked == true)){
+        xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel?Ticketinfo='+ticketSel.value+'&'+'Opentime='+allTime.value,true);
+        xhr.send();
+    }else {
+        reset();
+    }
+    xhr.onload = function addData(){
+        let Data = JSON.parse(xhr.responseText);
+        for (let i=0;i<Data.length;i++){
+            selData.push({
+                photo:Data[i].Picture1,
+                add:Data[i].Add,
+                name:Data[i].Name,
+                optime:Data[i].Opentime,
+                tel:Data[i].Tel,
+                ticket:Data[i].Ticketinfo
+            });
+        }
+        
+        let content = '';
+        let titleStr = '';
+        let icon = '';
+        for (let i=0;i<selData.length;i++){
+            titleStr = `<h4 class="py-3 pl-3 mt-2">為你篩選出 <span class="text-info">${selData.length}</span> 筆資料</h4>`
+            if ((ticketSel.checked == true) && (allTime.checked == false)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${ticketSel.value}
+                </span></h5>`
+            }else if ((ticketSel.checked == false) && (allTime.checked == true)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${allTime.value}
+                </span></h5>`
+            }else if ((ticketSel.checked == true) && (allTime.checked == true)) {
+                icon = `<h5><span class="badge badge-pill badge-info">
+                ${ticketSel.value}
+                </span>
+                <span class="badge badge-pill badge-info">
+                ${allTime.value}
+                </span></h5>`
+            }
+            content += `
+                <div class="row py-4 pl-3">
+                    <div class="col-lg-4">
+                    <div style="background-image:url(${selData[i].photo})"; class="bg-cover">
+                    </div>
+                    </div>
+                    <div class="col-lg-8 mt-3">
+                        <div class="h5 text-primary">${selData[i].name}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-map-marker-alt mr-2"></i>${selData[i].add}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-phone mr-2"></i>${selData[i].tel}</div>
+                        <div class="list-font text-secondary mt-1"><i class="fas fa-clock mr-2"></i>${selData[i].optime}</div>
+                        <div class="list-font text-secondary"><i class="fas fa-ticket-alt mr-2"></i>${selData[i].ticket}</div>
+                </div>
+                </div>
+            `
+        }
+        title.innerHTML = titleStr;
+        showBadge.innerHTML = icon;
+        list.innerHTML = content;
+    }
+}
+    searchBtn.addEventListener('click',showContent);
+    allTime.addEventListener('click',Option);
+    ticketSel.addEventListener('click',Option);
+    city.addEventListener('change',showContent);
+    
+
+
             // if (str == calldata[i].Zone){
             //     if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
             //         if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
@@ -139,54 +265,3 @@ function showContent(){
             //         });
             //     }
             // }
-            
-        }
-        
-        let content = '';
-        let titleStr = '';
-        let icon = '';
-        for (let i=0;i<selData.length;i++){
-            titleStr = `<h4 class="py-3 pl-3 mt-2">為你篩選出 <span class="text-info">${selData.length}</span> 筆資料</h4>`
-            if ((ticketSel.checked == true) && (allTime.checked == false)) {
-                icon = `<h5><span class="badge badge-pill badge-info">
-                ${ticketSel.value}
-                </span></h5>`
-            }else if ((ticketSel.checked == false) && (allTime.checked == true)) {
-                icon = `<h5><span class="badge badge-pill badge-info">
-                ${allTime.value}
-                </span></h5>`
-            }else if ((ticketSel.checked == true) && (allTime.checked == true)) {
-                icon = `<h5><span class="badge badge-pill badge-info">
-                ${ticketSel.value}
-                </span>
-                <span class="badge badge-pill badge-info">
-                ${allTime.value}
-                </span></h5>`
-            }
-            content += `
-                <div class="row py-4 pl-3">
-                    <div class="col-lg-4">
-                    <div style="background-image:url(${selData[i].photo})"; class="bg-cover">
-                    </div>
-                    </div>
-                    <div class="col-lg-8 mt-3">
-                        <div class="h5 text-primary">${selData[i].name}</div>
-                        <div class="list-font text-secondary mt-1"><i class="fas fa-map-marker-alt mr-2"></i>${selData[i].add}</div>
-                        <div class="list-font text-secondary mt-1"><i class="fas fa-phone mr-2"></i>${selData[i].tel}</div>
-                        <div class="list-font text-secondary mt-1"><i class="fas fa-clock mr-2"></i>${selData[i].optime}</div>
-                        <div class="list-font text-secondary"><i class="fas fa-ticket-alt mr-2"></i>${selData[i].ticket}</div>
-                </div>
-                </div>
-            `
-        }
-        title.innerHTML = titleStr;
-        showBadge.innerHTML = icon;
-        list.innerHTML = content;
-    }
-}
-
-
-searchBtn.addEventListener('click',showContent);
-allTime.addEventListener('click',showContent);
-ticketSel.addEventListener('click',showContent);
-city.addEventListener('change',showContent);
