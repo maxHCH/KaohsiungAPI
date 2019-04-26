@@ -6,141 +6,142 @@ const allTime = document.getElementById('alltime');
 const searchBtn = document.getElementById('search');
 const searchInput = document.querySelector('.nav-input');
 const showBadge = document.querySelector('.badge');
+const inputState = document.getElementById('inputState');
 const xhr = new XMLHttpRequest();
 
+xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel',true);
+xhr.send();
+xhr.onload = function section(){
+let calldata = JSON.parse(xhr.responseText);
+const kaoZone = [];
+for( let i=0 ; i<calldata.length ; i++){
+    kaoZone.push(calldata[i].Zone);
+    }
+    const area =[];
+    kaoZone.forEach(function(value) {
+    if (area.indexOf(value) == -1) {
+        area.push(value);
+        }
+    });
+    let opZone = '<option value="">請選擇</option>';
+    for (let i=0;i<area.length;i++){
+        opZone += `<option value="${area[i]}">${area[i]}</option>`;
+    }
+    inputState.innerHTML=opZone;
+}
 
 function showContent(){
-    let str = city.value;
     let ticketStr = ticketSel.value;
     let timeStr = allTime.value;
     let searchStr = searchInput.value;
-    xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel',true);
-    let data = JSON.stringify(str);
-    xhr.send(data);
     xhr.onload = function section(){
-        let calldata = JSON.parse(xhr.responseText);
         let selData = [];
         for( let i=0 ; i<calldata.length ; i++){
-            if (str == calldata[i].Zone){
-                if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
-                    if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
-                        selData.push({
-                            photo:calldata[i].Picture1,
-                            add:calldata[i].Add,
-                            name:calldata[i].Name,
-                            optime:calldata[i].Opentime,
-                            tel:calldata[i].Tel,
-                            ticket:calldata[i].Ticketinfo
-                        });
-                    }
-                    else if (ticketSel.checked == false) {
-                        selData.push({
-                            photo:calldata[i].Picture1,
-                            add:calldata[i].Add,
-                            name:calldata[i].Name,
-                            optime:calldata[i].Opentime,
-                            tel:calldata[i].Tel,
-                            ticket:calldata[i].Ticketinfo
-                        });
-                    }
-                }
-                else if ((allTime.checked == false) && (ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }
-                else if ((allTime.checked == false) && (ticketSel.checked == false)) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }
-            }
-            else if ((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo) && (str == '請選擇')) {
-                if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }else if (allTime.checked == false) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }
-            }
-            else if ((allTime.checked == true) && (timeStr == calldata[i].Opentime) && (str == '請選擇')) {
-                if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }else if (ticketSel.checked == false) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }    
-            }
-            //Search 功能
-            else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
-                let describe = calldata[i].Toldescribe;
-                let seek = describe.indexOf(searchStr); 
-                if (seek !== -1) {
-                    selData.push({
-                        photo:calldata[i].Picture1,
-                        add:calldata[i].Add,
-                        name:calldata[i].Name,
-                        optime:calldata[i].Opentime,
-                        tel:calldata[i].Tel,
-                        ticket:calldata[i].Ticketinfo
-                    });
-                }
-            }
-        }
-        //Search 功能
-        // if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
-        //     // let filterName = calldata.filter(function(item){
-        //     //     return item.Name == searchStr;
-        //     // });
             
-        //     // for (let i = 0 ; i < filterName.length ; i++) {
-        //     //     selData.push({
-        //     //         photo:filterName[i].Picture1,
-        //     //         add:filterName[i].Add,
-        //     //         name:filterName[i].Name,
-        //     //         optime:filterName[i].Opentime,
-        //     //         tel:filterName[i].Tel,
-        //     //         ticket:filterName[i].Ticketinfo
-        //     //     });
-        //     // }
-        // }
-        //
+            // if (str == calldata[i].Zone){
+            //     if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
+            //         if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
+            //             selData.push({
+            //                 photo:calldata[i].Picture1,
+            //                 add:calldata[i].Add,
+            //                 name:calldata[i].Name,
+            //                 optime:calldata[i].Opentime,
+            //                 tel:calldata[i].Tel,
+            //                 ticket:calldata[i].Ticketinfo
+            //             });
+            //         }
+            //         else if (ticketSel.checked == false) {
+            //             selData.push({
+            //                 photo:calldata[i].Picture1,
+            //                 add:calldata[i].Add,
+            //                 name:calldata[i].Name,
+            //                 optime:calldata[i].Opentime,
+            //                 tel:calldata[i].Tel,
+            //                 ticket:calldata[i].Ticketinfo
+            //             });
+            //         }
+            //     }
+            //     else if ((allTime.checked == false) && (ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }
+            //     else if ((allTime.checked == false) && (ticketSel.checked == false)) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }
+            // }
+            // else if ((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo) && (str == '請選擇')) {
+            //     if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }else if (allTime.checked == false) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }
+            // }
+            // else if ((allTime.checked == true) && (timeStr == calldata[i].Opentime) && (str == '請選擇')) {
+            //     if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }else if (ticketSel.checked == false) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }    
+            // }
+            // //Search 功能
+            // else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
+            //     let describe = calldata[i].Toldescribe;
+            //     let seek = describe.indexOf(searchStr); 
+            //     if (seek !== -1) {
+            //         selData.push({
+            //             photo:calldata[i].Picture1,
+            //             add:calldata[i].Add,
+            //             name:calldata[i].Name,
+            //             optime:calldata[i].Opentime,
+            //             tel:calldata[i].Tel,
+            //             ticket:calldata[i].Ticketinfo
+            //         });
+            //     }
+            // }
+            
+        }
+        
         let content = '';
         let titleStr = '';
         let icon = '';
