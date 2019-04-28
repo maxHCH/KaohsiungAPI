@@ -9,10 +9,11 @@ const showBadge = document.querySelector('.badge');
 const inputState = document.getElementById('inputState');
 const xhr = new XMLHttpRequest();
 
-xhr.open('get','https://obscure-crag-88418.herokuapp.com/travel',true);
+xhr.open('get','https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97',true);
 xhr.send();
 xhr.onload = function section(){
-let calldata = JSON.parse(xhr.responseText);
+let ogdata = JSON.parse(xhr.responseText);
+let calldata = ogdata.result.records;
 const kaoZone = [];
 for( let i=0 ; i<calldata.length ; i++){
     kaoZone.push(calldata[i].Zone);
@@ -23,7 +24,7 @@ for( let i=0 ; i<calldata.length ; i++){
         area.push(value);
         }
     });
-    let opZone = '<option value="">請選擇</option>';
+    let opZone = '<option value="請選擇">請選擇</option>';
     for (let i=0;i<area.length;i++){
         opZone += `<option value="${area[i]}">${area[i]}</option>`;
     }
@@ -34,112 +35,115 @@ function showContent(){
     let ticketStr = ticketSel.value;
     let timeStr = allTime.value;
     let searchStr = searchInput.value;
+    let str = city.value;
+    xhr.open('get','https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97',true);
+    xhr.send();
     xhr.onload = function section(){
+        let ogdata = JSON.parse(xhr.responseText);
+        let calldata = ogdata.result.records;
         let selData = [];
         for( let i=0 ; i<calldata.length ; i++){
-            
-            // if (str == calldata[i].Zone){
-            //     if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
-            //         if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
-            //             selData.push({
-            //                 photo:calldata[i].Picture1,
-            //                 add:calldata[i].Add,
-            //                 name:calldata[i].Name,
-            //                 optime:calldata[i].Opentime,
-            //                 tel:calldata[i].Tel,
-            //                 ticket:calldata[i].Ticketinfo
-            //             });
-            //         }
-            //         else if (ticketSel.checked == false) {
-            //             selData.push({
-            //                 photo:calldata[i].Picture1,
-            //                 add:calldata[i].Add,
-            //                 name:calldata[i].Name,
-            //                 optime:calldata[i].Opentime,
-            //                 tel:calldata[i].Tel,
-            //                 ticket:calldata[i].Ticketinfo
-            //             });
-            //         }
-            //     }
-            //     else if ((allTime.checked == false) && (ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }
-            //     else if ((allTime.checked == false) && (ticketSel.checked == false)) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }
-            // }
-            // else if ((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo) && (str == '請選擇')) {
-            //     if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }else if (allTime.checked == false) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }
-            // }
-            // else if ((allTime.checked == true) && (timeStr == calldata[i].Opentime) && (str == '請選擇')) {
-            //     if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }else if (ticketSel.checked == false) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }    
-            // }
-            // //Search 功能
-            // else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
-            //     let describe = calldata[i].Toldescribe;
-            //     let seek = describe.indexOf(searchStr); 
-            //     if (seek !== -1) {
-            //         selData.push({
-            //             photo:calldata[i].Picture1,
-            //             add:calldata[i].Add,
-            //             name:calldata[i].Name,
-            //             optime:calldata[i].Opentime,
-            //             tel:calldata[i].Tel,
-            //             ticket:calldata[i].Ticketinfo
-            //         });
-            //     }
-            // }
-            
+            if (str == calldata[i].Zone){
+                if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
+                    if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
+                        selData.push({
+                            photo:calldata[i].Picture1,
+                            add:calldata[i].Add,
+                            name:calldata[i].Name,
+                            optime:calldata[i].Opentime,
+                            tel:calldata[i].Tel,
+                            ticket:calldata[i].Ticketinfo
+                        });
+                    }
+                    else if (ticketSel.checked == false) {
+                        selData.push({
+                            photo:calldata[i].Picture1,
+                            add:calldata[i].Add,
+                            name:calldata[i].Name,
+                            optime:calldata[i].Opentime,
+                            tel:calldata[i].Tel,
+                            ticket:calldata[i].Ticketinfo
+                        });
+                    }
+                }
+                else if ((allTime.checked == false) && (ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }
+                else if ((allTime.checked == false) && (ticketSel.checked == false)) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }
+            }
+            else if ((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo) && (str == '請選擇')) {
+                if ((allTime.checked == true) && (timeStr == calldata[i].Opentime)) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }else if (allTime.checked == false) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }
+            }
+            else if ((allTime.checked == true) && (timeStr == calldata[i].Opentime) && (str == '請選擇')) {
+                if((ticketSel.checked == true) && (ticketStr == calldata[i].Ticketinfo)){
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }else if (ticketSel.checked == false) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }    
+            }
+            //Search 功能
+            else if((allTime.checked == false) && (ticketSel.checked == false) && (str == '請選擇')) {
+                let describe = calldata[i].Toldescribe;
+                let seek = describe.indexOf(searchStr); 
+                if (seek !== -1) {
+                    selData.push({
+                        photo:calldata[i].Picture1,
+                        add:calldata[i].Add,
+                        name:calldata[i].Name,
+                        optime:calldata[i].Opentime,
+                        tel:calldata[i].Tel,
+                        ticket:calldata[i].Ticketinfo
+                    });
+                }
+            }
         }
         
         let content = '';
