@@ -29,6 +29,7 @@ for( let i=0 ; i<calldata.length ; i++){
         opZone += `<option value="${area[i]}">${area[i]}</option>`;
     }
     inputState.innerHTML=opZone;
+    showContent();
 }
 
 function showContent(){
